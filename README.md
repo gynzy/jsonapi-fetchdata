@@ -1,8 +1,13 @@
-# JSONAPIapi::Fetchdata
+# JSONAPI::Fetchdata
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/jsonapi/fetchdata`. To experiment with that code, run `bin/console` for an interactive prompt.
+Many JSONAPI gems are being developed, mostly focusing on serialization.
+Few have implemented the parameters defined in the FetchData specifications.
 
-TODO: Delete this and the text above, and describe your gem
+This gem aims to focus on doing just that specific task.
+Making it easy to add FetchData parameters to gems which don't have support for them.
+The specific string delimiters noted in FetchData parameters, are not supported in Rack by default.
+We attempt to parse the parameter values into a hash structure.
+Trying to mimick the hash style notation used in ActiveRecord Querying.
 
 ## Installation
 
@@ -22,7 +27,11 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+add as middleware to Rails in config/application.rb
+
+```ruby
+config.middleware.insert_after ActionDispatch::ParamsParser, 'JSONAPI::FetchData::Middleware'
+```
 
 ## Development
 
@@ -38,4 +47,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
