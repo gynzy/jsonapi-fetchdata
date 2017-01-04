@@ -1,7 +1,8 @@
-# JSONAPI::Fetchdata
+# JSONAPI::FetchData
 
 Many JSONAPI gems are being developed, mostly focusing on serialization.
 Few have implemented the parameters defined in the FetchData specifications.
+http://jsonapi.org/format/#fetching
 
 This gem aims to focus on doing just that specific task.
 Making it easy to add FetchData parameters to gems which don't have support for them.
