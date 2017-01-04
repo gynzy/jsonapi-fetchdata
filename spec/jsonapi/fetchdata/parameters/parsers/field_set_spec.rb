@@ -34,20 +34,15 @@ describe JSONAPI::FetchData::Parameters::Parsers::FieldSet do
 
     let(:expectation) do
       {
-        comments: :updated_at,
-        products: [:name,:description,:price,:update_at]
+        'comments' => 'updated_at',
+        'products' => ['name','description','price','update_at']
       }
     end
 
     it 'must support comma delimiter for field names' do
       expect(json_params).to eq expectation
-      expect(json_params[:products]).to be_a Array
-      expect(json_params[:products].count).to eq 4
-    end
-
-    it 'converts string params to symbols' do
-        expect(json_params.keys).to all be_a(Symbol)
-        expect(json_params.values.flatten).to all be_a(Symbol)
+      expect(json_params['products']).to be_a Array
+      expect(json_params['products'].count).to eq 4
     end
 
   end

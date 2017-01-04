@@ -45,9 +45,9 @@ module JSONAPI
       def parse_json_api_parameters params
         arguments = params.slice *parsers.keys
 
-        conditions = arguments.reduce(page:{number: 1}) do |mem, (key, value)|
-          next unless parser = parsers[key.to_s]
-          mem[key.to_sym] = parser.parse value
+        conditions = arguments.reduce('page' => { 'number' => '1' }) do |mem, (key, value)|
+          next unless parser = parsers[key]
+          mem[key] = parser.parse value
           mem
         end
       end

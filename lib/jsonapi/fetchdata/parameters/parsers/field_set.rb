@@ -8,8 +8,10 @@ module JSONAPI
 
           def parse params={}
             params.reduce({}) do |mem, (key, value)|
-              ids = value.scan(/[\w]+/).map(&:to_sym)
-              mem[key.to_sym] = (ids.size == 1) ? ids.first : ids
+              if value && (value.size > 0)
+                ids = value.scan(/[\w]+/)
+                mem[key] = (ids.size == 1) ? ids.first : ids
+              end
               mem
             end
           end

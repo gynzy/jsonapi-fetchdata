@@ -26,7 +26,7 @@ describe JSONAPI::FetchData::Parameters::Parsers::Sort do
   context 'json behaviour' do
 
     let(:expectation) do
-      [:name, { created_at: :desc }, :price]
+      [ 'name', { 'created_at' => 'desc' }, 'price']
     end
 
     it 'must support comma delimiter for field names' do
@@ -35,13 +35,8 @@ describe JSONAPI::FetchData::Parameters::Parsers::Sort do
     end
 
     it 'mark negated fields with starting dash as descending' do
-      expect(json_params).to include(created_at: :desc)
+      expect(json_params).to include('created_at' => 'desc')
     end
-
-    it 'symbolizes keys' do
-      expect(json_params).to include(:name, :price)
-    end
-
 
   end
 end

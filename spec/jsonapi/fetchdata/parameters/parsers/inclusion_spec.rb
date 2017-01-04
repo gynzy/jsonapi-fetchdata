@@ -21,25 +21,15 @@ describe JSONAPI::FetchData::Parameters::Parsers::Inclusion do
 
   end
 
-
   context 'json behaviour' do
 
     let(:expectation) do
-      [ :author, comments: [ :author, { links: :protocol } ]]
+      [ 'author', 'comments' => [ 'author', { 'links' => 'protocol' } ]]
     end
 
     it 'must support dot notation for relationship paths' do
       expect(json_params).to eq expectation
-      expect(json_params).to include(comments: [{ links: :protocol }])
-    end
-
-    it 'folds similar paths into a hash' do
-
-    end
-
-    it 'converts string params to symbols' do
-        expect(json_params.keys).to all be_a(Symbol)
-        expect(json_params.values.flatten).to all be_a(Symbol)
+      expect(json_params).to include('author', 'comments' => ['author', { 'links' => 'protocol' }])
     end
 
     it 'collects delimited fields into an array' do

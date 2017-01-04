@@ -6,8 +6,10 @@ module JSONAPI
       module Parsers
         class Sort < Parser
 
-          def parse params={}
-            params.map{ |v| v.scan(/[-\w]+/) }.flatten.map { |c| (c[0] == '-') ? Hash[c[1..-1].to_sym, :desc] : c.to_sym }
+          def parse params
+            if params && (params.size > 0)
+              params.scan(/[-\w]+/).flatten.map { |c| (c[0] == '-') ? Hash[c[1..-1], 'desc'] : c }
+            end
           end
 
         end

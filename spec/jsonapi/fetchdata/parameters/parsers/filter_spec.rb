@@ -32,23 +32,14 @@ describe JSONAPI::FetchData::Parameters::Parsers::Filter do
 
     let(:expectation) do
       {
-        comment: [1, 2, 3],
-        author: 12
+        'comment' => ['1', '2', '3'],
+        'author' => '12'
       }
-    end
-
-    it 'symbolizes keys' do
-      expect(json_params.keys).to all be_a(Symbol)
-    end
-
-    it 'converts string params to numbers' do
-        expect(json_params.values.flatten).to all be_a(Integer)
     end
 
     it 'collects delimited fields into an array' do
       expect(json_params).to eq expectation
-      expect(json_params[:comment]).to be_a Array
-      expect(json_params[:comment]).to all be_a Integer
+      expect(json_params['comment']).to be_a Array
     end
 
   end

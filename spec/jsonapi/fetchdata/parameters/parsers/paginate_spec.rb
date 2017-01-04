@@ -32,17 +32,13 @@ describe JSONAPI::FetchData::Parameters::Parsers::Paginate do
 
     let(:expectation) do
       {
-        number: 3,
-        size: 50
+        'number' => 1,
+        'size' => 50
       }
     end
 
     it 'ignores undefined page keys' do
       expect(json_params.keys).to_not include('mud')
-    end
-
-    it 'symbolizes keys' do
-      expect(json_params.keys).to all be_a(Symbol)
     end
 
     it 'converts string params to numbers' do
