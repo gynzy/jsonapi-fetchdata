@@ -8,7 +8,7 @@ module JSONAPI
 
           def parse params
             if params && (params.size > 0)
-              params.scan(/[-\w]+/).flatten.map { |c| (c[0] == '-') ? Hash[c[1..-1], 'desc'] : c }
+              [params].flatten.map{ |col| col.scan(/[-\w]+/)}.flatten.map { |c| (c[0] == '-') ? Hash[c[1..-1], 'desc'] : c }
             end
           end
 
