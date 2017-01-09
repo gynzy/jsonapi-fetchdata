@@ -9,7 +9,7 @@ module JSONAPI
 
       def initialize app, *parsers
         @app = app
-        @adapter = JSONAPI::FetchData::Parameters::Adapter.new(parsers)
+        @adapter = JSONAPI::FetchData::Parameters::Adapter.new(*parsers)
       end
 
       def call env
