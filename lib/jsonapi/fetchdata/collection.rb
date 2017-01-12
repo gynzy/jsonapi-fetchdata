@@ -16,7 +16,7 @@ module JSONAPI
       end
 
       def find conditions={}
-        process @klass.all, @adapter.parameters(conditions)
+        process @klass, @adapter.parameters(conditions)
       end
 
       def process scope, conditions
@@ -30,8 +30,7 @@ module JSONAPI
             else               raise 'unsupported'
           end
         end
-        puts scope.explain
-        scope
+        scope.all
       end
 
       def full_column_names values, table_name
