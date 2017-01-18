@@ -30,7 +30,7 @@ module JSONAPI
             else               raise 'unsupported'
           end
         end
-        scope.all
+        scope
       end
 
       def full_column_names values, table_name
