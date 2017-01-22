@@ -28,11 +28,41 @@ Or install it yourself as:
 
 ## Usage
 
-add as middleware to Rails in config/application.rb
+### Collection
+
+```ruby
+GET /posts
+
+def index
+  JSONAPI::FetchData::Collection.find(Post, parameters)
+end
+```
+
+### Resource
+
+```ruby
+GET /posts/1
+
+def show
+  JSONAPI::FetchData::Resource.find(Post, parameters)
+end
+```
+
+### Middleware
+Convert Rack request.parameters to JSONAPI format
+Add as middleware to Rails in config/application.rb
 
 ```ruby
 config.middleware.insert_after ActionDispatch::ParamsParser, 'JSONAPI::FetchData::Middleware'
 ```
+
+### Parameters::Adapter
+
+Parser registration and processing Rack parameters to JSONAPI
+
+### Parameters::Parser
+
+Implementing parsing of delimination for each of the FetchData parameters, include, fields, sort, filter and page.
 
 ## Development
 
