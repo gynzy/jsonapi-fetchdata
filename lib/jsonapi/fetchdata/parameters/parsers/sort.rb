@@ -8,8 +8,11 @@ module JSONAPI
 
           def parse params
             if params && (params.size > 0)
-              # [params].flatten.map{ |col| col.scan(/[-\w]+/)}.flatten.map { |c| (c[0] == '-') ? Hash[c[1..-1], 'desc'] : c }
-              params.scan(/[-\w]+/).flatten.map { |c| (c[0] == '-') ? "#{c[1..-1]} DESC" : c }.join(", ")
+              if Rails::VERSION::MAJOR >= 4
+                [params].flatten.map{ |col| col.scan(/[-\w]+/)}.flatten.map { |c| (c[0] == '-') ? Hash[c[1..-1], 'desc'] : c }
+              else
+                params.scan(/[-\w]+/).flatten.map { |c| (c[0] == '-') ? "#{c[1..-1]} DESC" : c }.join(", ")
+              end
             end
           end
 
