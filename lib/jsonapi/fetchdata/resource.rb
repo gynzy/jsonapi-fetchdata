@@ -4,7 +4,7 @@ require 'active_support/core_ext/hash'
 
 module JSONAPI
   module FetchData
-    class Collection
+    class Resource
 
       def self.find(scope, conditions={}, *parsers)
         new(scope, *parsers).find(conditions)
@@ -12,25 +12,23 @@ module JSONAPI
 
       def initialize scope, *parsers
         @scope = scope
-        @adapter = JSONAPI::FetchData::Parameters::Adapter.new(*parsers)
+        @adapter = JSONAPI::FetchData::Parameters::Adapter.new('include', 'fields')
       end
 
       def find conditions={}
-        process(@adapter.parameters(conditions))
+        process @adapter.parameters(conditions)
+        id = conditions.fetch('data', {})['id']
+        @scope.find(id)
       end
 
       def process conditions
         conditions.each do |k, v|
           @scope = case k.to_sym
-            when :include then @scope.includes(v)
-            when :fields  then @scope.select(full_column_names(v, scope.klass.table_name))
-            when :filter  then @scope.where(v)
-            when :sort    then @scope.order(v)
-            when :page    then @scope.page(v [:number]).per(v[:size])
+            when :include then @scope.includes(*v).join(*v)
+            when :fields  then @scope.select(full_column_names(v, @scope.klass.table_name))
             else raise 'unsupported'
           end
         end
-        @scope
       end
 
       def full_column_names values, table_name

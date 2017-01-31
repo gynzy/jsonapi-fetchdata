@@ -9,14 +9,18 @@ module JSONAPI
 
       def initialize app, *parsers
         @app = app
-        @adapter = JSONAPI::FetchData::Parameters::Adapter.new(parsers)
+        @adapter = JSONAPI::FetchData::Parameters::Adapter.new(*parsers)
       end
 
       def call env
         request = Rack::Request.new env
         jsonapi_parameters = @adapter.parameters(request.params)
         jsonapi_parameters.each do |key, value|
-          request.update_param key, value
+          if request.respond_to? :update_param
+            request.update_param key, value
+          else
+            request.params[key] = value
+          end
         end
 
         @app.call env

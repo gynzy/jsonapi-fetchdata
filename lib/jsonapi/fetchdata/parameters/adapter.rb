@@ -14,7 +14,7 @@ module JSONAPI
           jsonapi_params.with_indifferent_access
         end
 
-        # private
+        private
 
         def parse params
           subset = params.slice(*parsers.keys)

@@ -1,6 +1,7 @@
 require 'jsonapi/fetchdata/version'
 require 'jsonapi/fetchdata/middleware'
 require 'jsonapi/fetchdata/collection'
+require 'jsonapi/fetchdata/resource'
 
 module JSONAPIapi
   module Fetchdata
