@@ -1,4 +1,4 @@
-# JSONAPI::FetchData
+# JSONAPI::FetchData [![Build Status](https://travis-ci.org/mvkampen/jsonapi-fetchdata.svg?branch=master)](https://travis-ci.org/mvkampen/jsonapi-fetchdata)
 
 Many JSONAPI gems are being developed, mostly focusing on serialization.
 Few have implemented the parameters defined in the FetchData specifications.
