@@ -6,6 +6,7 @@ module JSONAPI
       class Adapter
 
         def initialize *parsers
+          raise ObjectRelationalMappingNotFound unless defined?(::ActiveRecord)
           @selected_parsers = parsers.map(&:to_s)
         end
 
