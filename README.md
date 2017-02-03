@@ -56,6 +56,14 @@ Add as middleware to Rails in config/application.rb
 config.middleware.insert_after ActionDispatch::ParamsParser, 'JSONAPI::FetchData::Middleware'
 ```
 
+### Configuration
+
+Change maximum returned resource objects, when no pagination parameters have been provided. 50 by default.
+
+```ruby
+JSONAPI::FetchData.config.max_per_page = 5
+```
+
 ### Parameters::Adapter
 
 Parser registration and processing Rack parameters to JSONAPI
