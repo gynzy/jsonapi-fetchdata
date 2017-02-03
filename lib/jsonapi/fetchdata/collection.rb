@@ -27,7 +27,7 @@ module JSONAPI
             when :fields  then @scope.select(full_column_names(v, scope.klass.table_name))
             when :filter  then @scope.where(v)
             when :sort    then @scope.order(v)
-            when :page    then @scope.page(v [:number]).per(v[:size])
+            when :page    then @scope.offset(v['offset']).limit(v['limit'])
             else raise 'unsupported'
           end
         end

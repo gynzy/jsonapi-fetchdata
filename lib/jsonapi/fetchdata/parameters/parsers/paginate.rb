@@ -1,5 +1,8 @@
 require 'jsonapi/fetchdata/parameters/parser'
 
+# parses both page and offset strategies
+# internally translates into offset, since thats native to AR
+
 module JSONAPI
   module FetchData
     module Parameters
@@ -7,10 +10,13 @@ module JSONAPI
         class Paginate < Parser
 
           def parse params={}
-            number, limit, size = params.values_at('number', 'limit', 'size')
+            number, size, offset, limit = params.values_at('number', 'size', 'offset', 'limit')
+            limit = (limit || size || config.max_per_page).to_i
+            number = (number || 1).to_i
+            offset = (offset || number * limit).to_i
             {
-              number: (number || 1).to_i,
-              size: (size || limit || Kaminari.config.max_per_page || 40).to_i
+              'offset': offset,
+              'limit': (size || limit || config.max_per_page).to_i
             }
           end
 
