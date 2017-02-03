@@ -11,7 +11,7 @@ module JSONAPI
 
           def parse params={}
             number, size, offset, limit = params.values_at('number', 'size', 'offset', 'limit')
-            limit = (limit || size || config.max_per_page).to_i
+            limit = (limit || size || JSONAPI::FetchData.config.max_per_page).to_i
             number = (number || 1).to_i
             offset = (offset || number * limit).to_i
             {
