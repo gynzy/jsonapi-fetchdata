@@ -1,5 +1,6 @@
 require 'jsonapi/fetchdata/parameters/adapter'
 require 'active_support/core_ext/module/delegation'
+require 'active_support/core_ext/string/inflections'
 require 'active_support/core_ext/hash'
 
 module JSONAPI
@@ -17,20 +18,20 @@ module JSONAPI
 
       def find conditions={}
         process(@adapter.parameters(conditions))
-        @scope
       end
 
       def process conditions
         conditions.each do |k, v|
           @scope = case k.to_sym
-            when :include then @scope.includes(v)
-            when :fields  then @scope.select(full_column_names(v, scope.klass.table_name))
+            when :include then @scope.includes(v).references(v.map(&:tableize))
+            when :fields  then @scope.select(full_column_names(v, @scope.klass.table_name))
             when :filter  then @scope.where(v)
             when :sort    then @scope.order(v)
             when :page    then @scope.offset(v['offset']).limit(v['limit'])
             else raise 'unsupported'
           end
         end
+        @scope
       end
 
       def full_column_names values, table_name
