@@ -17,14 +17,14 @@ module JSONAPI
 
       def find conditions={}
         process @adapter.parameters(conditions)
-        id = conditions.fetch('data', {})['id']
+        id = conditions.fetch('id', nil)
         @scope.find(id)
       end
 
       def process conditions
         conditions.each do |k, v|
           @scope = case k.to_sym
-            when :include then @scope.includes(*v).join(*v)
+            when :include then @scope.includes(v)
             when :fields  then @scope.select(full_column_names(v, @scope.klass.table_name))
             else raise 'unsupported'
           end

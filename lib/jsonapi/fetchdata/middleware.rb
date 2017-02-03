@@ -16,7 +16,11 @@ module JSONAPI
         request = Rack::Request.new env
         jsonapi_parameters = @adapter.parameters(request.params)
         jsonapi_parameters.each do |key, value|
-          request.update_param key, value
+          if request.respond_to? :update_param
+            request.update_param key, value
+          else
+            request.params[key] = value
+          end
         end
 
         @app.call env

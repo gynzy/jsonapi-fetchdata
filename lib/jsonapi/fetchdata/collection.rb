@@ -17,12 +17,13 @@ module JSONAPI
 
       def find conditions={}
         process(@adapter.parameters(conditions))
+        @scope
       end
 
       def process conditions
         conditions.each do |k, v|
           @scope = case k.to_sym
-            when :include then @scope.includes(*v).join(*v)
+            when :include then @scope.includes(v)
             when :fields  then @scope.select(full_column_names(v, scope.klass.table_name))
             when :filter  then @scope.where(v)
             when :sort    then @scope.order(v)
