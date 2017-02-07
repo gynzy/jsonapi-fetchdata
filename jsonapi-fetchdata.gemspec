@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["m.kampen@hotmail.com"]
 
   spec.summary       = %q{FetchData Parameter parsing for JSONAPI.}
-  spec.description   = %q{Parses delimiters within HTTP parameters as defined by JSONAPI FetchData }
+  spec.description   = %q{Parses delimiters within HTTP parameters as defined by JSONAPI FetchData}
   spec.homepage      = "https://github.com/mvkampen/jsonapi-fetchdata"
   spec.license       = "MIT"
 

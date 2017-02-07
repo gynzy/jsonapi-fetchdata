@@ -9,7 +9,7 @@ module JSONAPI
           delegate :parse, to: :new
         end
 
-        def parse params={}
+        def parse _params={}
           raise NotImplementedError
         end
 

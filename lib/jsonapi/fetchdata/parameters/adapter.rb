@@ -20,7 +20,8 @@ module JSONAPI
         def parse params
           subset = params.slice(*parsers.keys)
           subset.reduce({}) do |mem, (key, value)|
-            next unless parser = parsers[key]
+            parser = parsers[key]
+            next if parser.nil?
             mem[key] = parser.parse value
             mem
           end
@@ -38,7 +39,7 @@ module JSONAPI
 
         def parsers
           @parsers ||=  if @selected_parsers.any?
-                          available_parsers.slice *@selected_parsers
+                          available_parsers.slice(*@selected_parsers)
                         else
                           available_parsers
                         end

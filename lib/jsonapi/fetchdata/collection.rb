@@ -22,19 +22,19 @@ module JSONAPI
 
       def process conditions
         conditions.each do |k, v|
-          @scope = case k.to_sym
-            when :include then @scope.includes(v).references(v.map(&:tableize))
-            when :fields  then @scope.select(full_column_names(v, @scope.klass.table_name))
-            when :filter  then @scope.where(v)
-            when :sort    then @scope.order(v)
-            when :page    then @scope.offset(v['offset']).limit(v['limit'])
-            else raise 'unsupported'
-          end
+          @scope =  case k.to_sym
+                      when :include then @scope.includes(v).references(v.map(&:tableize))
+                      when :fields  then @scope.select(full_column_names(v))
+                      when :filter  then @scope.where(v)
+                      when :sort    then @scope.order(v)
+                      when :page    then @scope.offset(v['offset']).limit(v['limit'])
+                      else raise 'unsupported'
+                    end
         end
         @scope
       end
 
-      def full_column_names values, table_name
+      def full_column_names values
         case values
         when Hash then
           values.reduce([]) do |columns,(table_name, names)|

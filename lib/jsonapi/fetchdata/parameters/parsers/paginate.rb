@@ -16,7 +16,7 @@ module JSONAPI
             offset = (offset || number * limit).to_i
             {
               'offset': offset,
-              'limit': (size || limit || config.max_per_page).to_i
+              'limit': limit
             }
           end
 

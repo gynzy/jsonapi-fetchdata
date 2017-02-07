@@ -1,4 +1,6 @@
-# JSONAPI::FetchData [![Build Status](https://travis-ci.org/mvkampen/jsonapi-fetchdata.svg?branch=master)](https://travis-ci.org/mvkampen/jsonapi-fetchdata)
+# JSONAPI::FetchData
+[![Build Status](https://travis-ci.org/mvkampen/jsonapi-fetchdata.svg?branch=master)](https://travis-ci.org/mvkampen/jsonapi-fetchdata)
+[![Issue Count](https://codeclimate.com/github/mvkampen/jsonapi-fetchdata/badges/issue_count.svg)](https://codeclimate.com/github/mvkampen/jsonapi-fetchdata)
 
 Many JSONAPI gems are being developed, mostly focusing on serialization.
 Few have implemented the parameters defined in the FetchData specifications.
@@ -62,6 +64,12 @@ Change maximum returned resource objects, when no pagination parameters have bee
 
 ```ruby
 JSONAPI::FetchData.config.max_per_page = 5
+
+or
+
+JSONAPI::FetchData.configure do |config|
+  config.max_per_page = 5
+end
 ```
 
 ### Parameters::Adapter
@@ -80,7 +88,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/jsonapi-fetchdata.
+Bug reports and pull requests are welcome on GitHub at https://github.com/mvkampen/jsonapi-fetchdata.
 
 
 ## License
