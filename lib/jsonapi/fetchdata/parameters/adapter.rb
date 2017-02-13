@@ -27,7 +27,7 @@ module JSONAPI
 
         def available_parsers
           @available_parsers ||= {
-            'page'     => Parameters::Parsers::Paginate,
+            # 'page'     => Parameters::Parsers::Paginate,
             'include'  => Parameters::Parsers::Inclusion,
             'sort'     => Parameters::Parsers::Sort,
             'fields'   => Parameters::Parsers::FieldSet,
