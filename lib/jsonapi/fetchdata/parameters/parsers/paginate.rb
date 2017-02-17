@@ -15,8 +15,8 @@ module JSONAPI
             number = (number || 1).to_i
             offset = (offset || number * limit).to_i
             {
-              'offset': offset,
-              'limit': limit
+              'offset' => offset,
+              'limit' => limit
             }
           end
 

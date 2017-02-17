@@ -25,8 +25,8 @@ describe JSONAPI::FetchData::Collection do
     expect(scope).to receive(:includes).with(['address']).and_return scope
     expect(scope).to receive(:references).with([klass.table_name]).and_return scope
     expect(scope).to receive(:select).with(['users.name', 'users.age']).and_return scope
-    expect(scope).to receive(:where).with('name': ['Marco', 'Michel']).and_return scope
-    expect(scope).to receive(:order).with(['age', 'name': 'desc']).and_return scope
+    expect(scope).to receive(:where).with('name' => ['Marco', 'Michel']).and_return scope
+    expect(scope).to receive(:order).with(['age', { 'name' => 'desc' }]).and_return scope
     expect(scope).to receive(:offset).with(40).and_return scope
     expect(scope).to receive(:limit).with(20).and_return scope
 
