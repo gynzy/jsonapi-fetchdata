@@ -9,7 +9,6 @@ module JSONAPI
         class Inclusion < Parser
 
           def parse params
-
             if params && (params.size > 0)
               results = params.strip.split(/[\s,]+/).map do |s|
                           s.strip.split(/\./).reverse.reduce do |a, b|
