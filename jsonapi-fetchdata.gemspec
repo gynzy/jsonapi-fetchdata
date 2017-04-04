@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["m.kampen@hotmail.com"]
 
   spec.summary       = %q{FetchData Parameter parsing for JSONAPI.}
-  spec.description   = %q{Parses delimiters within HTTP parameters as defined by JSONAPI FetchData }
+  spec.description   = %q{Parses delimiters within HTTP parameters as defined by JSONAPI FetchData}
   spec.homepage      = "https://github.com/mvkampen/jsonapi-fetchdata"
   spec.license       = "MIT"
 
@@ -31,6 +31,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.0'
 
-  spec.add_dependency 'activesupport', '>= 3.0'
+  spec.add_dependency 'activesupport', '>= 3.2'
   spec.add_dependency 'rack'
 end

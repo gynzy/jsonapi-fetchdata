@@ -11,27 +11,35 @@ module JSONAPI
       end
 
       def initialize scope, *parsers
+        default = ['include', 'fields']
+        selected = (default & parsers)
+        parsers = if selected.empty?
+                    default
+                  else
+                    selected
+                  end
+
         @scope = scope
-        @adapter = JSONAPI::FetchData::Parameters::Adapter.new('include', 'fields')
+        @adapter = JSONAPI::FetchData::Parameters::Adapter.new(*parsers)
       end
 
       def find conditions={}
-        process @adapter.parameters(conditions)
         id = conditions.fetch('id', nil)
-        @scope.find(id)
+        process(@adapter.parameters(conditions)).find(id)
       end
 
       def process conditions
         conditions.each do |k, v|
-          @scope = case k.to_sym
-            when :include then @scope.includes(v)
-            when :fields  then @scope.select(full_column_names(v, @scope.klass.table_name))
-            else raise 'unsupported'
-          end
+          @scope =  case k.to_sym
+                      when :include then @scope.includes(v).references(v.map(&:tableize))
+                      when :fields  then @scope.select(full_column_names(v))
+                      else raise 'unsupported'
+                    end
         end
+        @scope
       end
 
-      def full_column_names values, table_name
+      def full_column_names values
         case values
         when Hash then
           values.reduce([]) do |columns,(table_name, names)|

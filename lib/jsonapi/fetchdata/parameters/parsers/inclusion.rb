@@ -11,10 +11,10 @@ module JSONAPI
           def parse params
             if params && (params.size > 0)
               results = params.strip.split(/[\s,]+/).map do |s|
-                          s.strip.split(/\./).reverse.reduce do |a, b|
-                            Hash[b, a]
-                          end
-                        end
+                s.strip.split(/\./).reverse.reduce do |a, b|
+                  Hash[b, a]
+                end
+              end
 
               results.reduce([]) do |a, b|
                 if Hash === b
@@ -33,7 +33,7 @@ module JSONAPI
             end
           end
 
-          def resolution key, a, b
+          def resolution _, a, b
             case a
             when Array then
               case b

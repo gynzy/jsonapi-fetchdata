@@ -1,5 +1,6 @@
 require 'jsonapi/fetchdata/parameters/adapter'
 require 'active_support/core_ext/module/delegation'
+require 'active_support/core_ext/string/inflections'
 require 'active_support/core_ext/hash'
 
 module JSONAPI
@@ -17,7 +18,6 @@ module JSONAPI
 
       def find conditions={}
         process(@adapter.parameters(conditions))
-        @scope
       end
 
       def process conditions
@@ -31,9 +31,10 @@ module JSONAPI
             else raise 'unsupported'
           end
         end
+        @scope
       end
 
-      def full_column_names values, table_name
+      def full_column_names values
         case values
         when Hash then
           values.reduce([]) do |columns,(table_name, names)|

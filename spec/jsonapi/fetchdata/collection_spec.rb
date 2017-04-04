@@ -3,8 +3,9 @@ require 'rack/mock'
 
 describe JSONAPI::FetchData::Collection do
 
-  let(:scope) { double('scope') }
-  let(:collection) { JSONAPI::FetchData::Collection.new(scope) }
+  let(:klass) { Class.new(Object) }
+  let(:scope) { double('scope', klass: klass) }
+  let(:service_object) { JSONAPI::FetchData::Collection.new(scope) }
   let(:params) {
     {
       'include' => 'address',
@@ -15,14 +16,21 @@ describe JSONAPI::FetchData::Collection do
     }
   }
 
-  it 'builds query scope using AR methods' do
-    expect(scope).to receive_message_chain(:includes, :join)
-    expect(scope).to receive(:select).with(params['fields'])
-    expect(scope).to receive(:where).with(params['filter'])
-    expect(scope).to receive(:order).with(params['sort'])
-    expect(scope).to receive_message_chain(:page,:per)
+  before do
+    allow(klass).to receive(:table_name).and_return 'addresses'
+    allow(String).to receive(:tablelize).and_return klass.table_name
+  end
 
-    collection.find(params)
+  it 'builds query scope using AR methods' do
+    expect(scope).to receive(:includes).with(['address']).and_return scope
+    expect(scope).to receive(:references).with([klass.table_name]).and_return scope
+    expect(scope).to receive(:select).with(['users.name', 'users.age']).and_return scope
+    expect(scope).to receive(:where).with('name' => ['Marco', 'Michel']).and_return scope
+    expect(scope).to receive(:order).with(['age', { 'name' => 'desc' }]).and_return scope
+    expect(scope).to receive(:offset).with(40).and_return scope
+    expect(scope).to receive(:limit).with(20).and_return scope
+
+    service_object.find(params)
   end
 
 end
