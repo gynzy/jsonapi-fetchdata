@@ -13,15 +13,18 @@ module JSONAPI
       end
 
       def call env
-        request = Rack::Request.new env
-        jsonapi_parameters = @adapter.parameters(request.params)
-        jsonapi_parameters.each do |key, value|
-          if request.respond_to? :update_param
-            request.update_param key, value
-          else
-            request.params[key] = value
+        if env['PATH_INFO'].start_with?('/api/v3')
+          request = Rack::Request.new env
+          jsonapi_parameters = @adapter.parameters(request.params)
+          jsonapi_parameters.each do |key, value|
+            if request.respond_to? :update_param
+              request.update_param key, value
+            else
+              request.params[key] = value
+            end
           end
         end
+
 
         @app.call env
       end

@@ -10,7 +10,7 @@ module JSONAPI
             params.reduce({}) do |mem, (key, value)|
               if value && (value.size > 0)
                 ids = value.split(',').map(&:strip)
-                mem[key] = (ids.size == 1) ? ids.first : ids
+                mem[key.underscore] = (ids.size == 1) ? ids.first : ids
               end
               mem
             end
