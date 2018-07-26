@@ -31,7 +31,7 @@ module JSONAPI
       def process conditions
         conditions.each do |k, v|
           @scope =  case k.to_sym
-                      when :include then @scope.includes(v)
+                      when :include then @scope.includes(v).references(v.map(&:tableize))
                       when :fields  then @scope.select(full_column_names(v))
                       else raise 'unsupported'
                     end

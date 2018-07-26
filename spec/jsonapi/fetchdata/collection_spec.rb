@@ -4,7 +4,7 @@ require 'rack/mock'
 describe JSONAPI::FetchData::Collection do
 
   let(:klass) { Class.new(Object) }
-  let(:scope) { double('scope', klass: klass) }
+  let(:scope) { double('scope', klass: klass, table_name: 'users') }
   let(:service_object) { JSONAPI::FetchData::Collection.new(scope) }
   let(:params) {
     {

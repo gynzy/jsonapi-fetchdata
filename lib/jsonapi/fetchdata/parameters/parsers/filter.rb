@@ -9,7 +9,7 @@ module JSONAPI
           def parse params={}
             params.reduce({}) do |mem, (key, value)|
               if value && (value.size > 0)
-                ids = value.split(',').map(&:strip)
+                ids = value.is_a?(Array) ? value : value.split(',').map(&:strip)
                 mem[key.underscore] = (ids.size == 1) ? ids.first : ids
               end
               mem

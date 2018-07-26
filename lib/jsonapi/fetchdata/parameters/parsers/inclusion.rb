@@ -10,10 +10,12 @@ module JSONAPI
 
           def parse params
             if params && (params.size > 0)
-              results = params.strip.split(/[\s,]+/).map do |s|
+              query = params.is_a?(Array) ? params : params.strip.split(/[\s,]+/)
+
+              results = query.map do |s|
                 s.strip.split(/\./).reverse.reduce do |a, b|
                   Hash[b, a]
-                end
+                end if s
               end
 
               results.reduce([]) do |a, b|

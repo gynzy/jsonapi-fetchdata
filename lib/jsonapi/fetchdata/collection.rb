@@ -24,7 +24,7 @@ module JSONAPI
         conditions.each do |k, v|
           @scope = case k.to_sym
             when :include then @scope.includes(v)
-            when :fields  then @scope.select(full_column_names(v, @scope.table_name))
+            when :fields  then @scope.select(full_column_names(v))
             when :filter  then @scope.where(v)
             when :sort    then @scope.order(v)
             when :page    then @scope.page(v [:number]).per(v[:size])

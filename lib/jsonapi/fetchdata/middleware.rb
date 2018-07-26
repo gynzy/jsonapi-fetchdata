@@ -25,7 +25,6 @@ module JSONAPI
           end
         end
 
-
         @app.call env
       end
 
